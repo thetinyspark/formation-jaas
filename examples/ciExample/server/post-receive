@@ -1,0 +1,29 @@
+#!/bin/bash
+# Hook post-receive : déploiement automatique dans ~/git-hooks-demo/production
+
+# Chemin absolu vers ton dossier de production
+WORK_TREE=C:/Users/BlackBeard/Desktop/test/production
+GIT_DIR=C:/Users/BlackBeard/Desktop/test/server.git
+
+# Lecture des références reçues
+while read oldrev newrev ref
+do
+  # On ne déploie que si la branche "master" est mise à jour
+  if [[ $ref == refs/heads/master ]]; then
+    echo "🚀 Déploiement sur la branche main..."
+
+    # Par exemple ici, je peux conditionner le déploiement à des tests 
+    # ICI DECLENCHER JUNIT OU AUTRE OUTIL DE TESTS
+    # si les tests passent alors je déploie mes sources de ma branche master vers le working tree
+    git --work-tree=$WORK_TREE --git-dir=$GIT_DIR checkout -f master
+
+    # Je lance l'obfuscation des sources dans le working tree
+    # ICI DECLENCHER L'OBFUSCATION DES SOURCES ( avec proguard ou autre outil )
+    # Je lance le build de production dans le working tree
+    # ICI DECLENCHER LE BUILD DE PRODUCTION ( avec maven, gradle ou autre outil )
+    
+    echo "✅ Déploiement terminé dans $WORK_TREE"
+  else
+    echo "ℹ️ Push reçu sur $ref — pas de déploiement"
+  fi
+done

@@ -1,0 +1,1 @@
+À ajouter dans les hooks de GIT

@@ -1,0 +1,17 @@
+#!/bin/bash
+# Hook serveur : refuser les pushes avec plus de 3 commits
+
+# Lecture des refs reçues du push
+while read oldrev newrev refname
+do
+  # Compter le nombre de commits poussés
+  count=$(git rev-list --count $oldrev..$newrev)
+
+  if [ "$count" -gt 3 ]; then
+    echo "❌ Push refusé : plus de 3 commits d'un coup ($count commits)"
+    exit 1
+  fi
+done
+
+echo "✅ Push accepté."
+exit 0
