@@ -20,10 +20,10 @@ public class JwtServer {
     private static final String SECRET = "mySuperSecretKey";
 
     // JWT generation
-    public String generateToken(String username) throws Exception {
+    public String generateToken(String data) throws Exception {
 
         String headerJson = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
-        String payloadJson = "{\"sub\":\"" + username + "\"}";
+        String payloadJson = "{\"sub\":\"" + data + "\"}";
 
         String header = base64UrlEncode(headerJson);
         String payload = base64UrlEncode(payloadJson);
