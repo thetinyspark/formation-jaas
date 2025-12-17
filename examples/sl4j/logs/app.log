@@ -1,0 +1,5 @@
+logback.pattern_IS_UNDEFINEDlogback.pattern_IS_UNDEFINEDMASKED13:56:35 INFO  com.example.SecureLoggingExample - User -5588020 action login
+13:58:37 INFO  com.example.SecureLoggingExample - User -5588020 action login
+13:59:42 INFO  com.example.SecureLoggingExample - 123****
+13:59:42 INFO  com.example.SecureLoggingExample - User -5588020 action login
+****************
