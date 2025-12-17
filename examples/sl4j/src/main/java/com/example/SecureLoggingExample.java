@@ -9,10 +9,9 @@ public class SecureLoggingExample {
 
     public static void main(String[] args) {
 
-        int username = 0xffaabbcc; // Example of non-sensitive data
-        String action = "login";
-
-        logger.info("password : 123");
-        logger.info("User {} action {}", username, action);
+        String username = "myUserName";
+        String action = "myAction";
+        String pwd = "secret123";
+        logger.info("Login user={} action={} password={}", username, action, pwd);
     }
 }

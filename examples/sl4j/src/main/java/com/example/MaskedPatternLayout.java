@@ -29,7 +29,7 @@ public class MaskedPatternLayout extends PatternLayout {
         return maskMessage(message);
     }
 
-    private String maskMessage(String message) {
+private String maskMessage(String message) {
 
         if (message == null) {
             return null;
@@ -41,14 +41,11 @@ public class MaskedPatternLayout extends PatternLayout {
             Matcher matcher = pattern.matcher(maskedMessage);
             StringBuffer sb = new StringBuffer();
 
-            System.out.println("Applying mask pattern: " + pattern.pattern());
-
             while (matcher.find()) {
-                String masked = "****";
-                matcher.appendReplacement(sb, matcher.group(1) + masked);
+                matcher.appendReplacement(sb,matcher.group(1) + "****");
             }
             matcher.appendTail(sb);
-            maskedMessage = "****";
+            maskedMessage = sb.toString();
         }
 
         return maskedMessage;
