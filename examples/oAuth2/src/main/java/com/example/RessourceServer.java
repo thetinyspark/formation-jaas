@@ -1,5 +1,8 @@
 package com.example;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 public class RessourceServer {
 
     private MockOAuth2Server authServer;
@@ -21,9 +24,34 @@ public class RessourceServer {
 
     public String getProtectedData(String token) {
         if (authServer.validateToken(token)) {
-            return "Protected Resource Data";
+            String payload = getPayload(token);
+            String[] parts = payload.split(":");
+            String role = parts[1].replace("\"", "");
+            role = role.replace("}", "");
+            if( role.equals("admin") ){
+                return "ADMIN SECRET DATA";
+            }
+            else if( role.equals("commercial")){
+                return "COMMERCIAL SECRET DATA";
+            }
+            else{
+                return "NOT ALLOWED";
+            }
         } else {
             return "Access Denied";
         }
+    }
+
+    public String base64UrlDecode(String value) {
+        byte[] decodedBytes = Base64.getUrlDecoder().decode(value);
+        return new String(decodedBytes, StandardCharsets.UTF_8);
+    }
+
+    public String getPayload(String token) {
+        String[] parts = token.split("\\.");
+        if (parts.length != 3) {
+            return null;
+        }
+        return base64UrlDecode(parts[1]);
     }
 }

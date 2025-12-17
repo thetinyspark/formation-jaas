@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Scanner;
+
 /**
  * Client qui utilise le serveur OAuth2 simulé.
  */
@@ -18,11 +20,22 @@ public class OAuth2ClientExample {
         // oAuth2 utilisé par le serveur de ressource
         RessourceServer resourceServer = new RessourceServer();
 
-        String clientId = "my-client";
-        String clientSecret = "secret123";
+        // String clientId = "user1";
+        // String clientSecret = "titi";
+
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Entrez votre utilisateur: ");
+        String userInput = scanner.nextLine();
+        
+        System.out.print("Entrez votre mot de passe: ");
+        String userPwd = scanner.nextLine();
+        
 
         System.out.println("Client ask for a token...");
-        String token = authServer.getToken(clientId, clientSecret);
+        String token = authServer.getToken(userInput, userPwd);
+
+        scanner.close();
 
         if (token != null) {
             System.out.println("Received token : " + token);
