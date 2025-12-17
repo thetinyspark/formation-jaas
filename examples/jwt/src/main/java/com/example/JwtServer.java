@@ -17,7 +17,7 @@ import java.util.Base64;
 public class JwtServer {
 
     // secret key
-    private static final String SECRET = "mySuperSecretKey";
+    private static final String SECRET = "azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_azertyuiopqsdfghjklmwxcvb_";
 
     // JWT generation
     public String generateToken(String data) throws Exception {
@@ -62,5 +62,18 @@ public class JwtServer {
         return Base64.getUrlEncoder()
                 .withoutPadding()
                 .encodeToString(value.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public String base64UrlDecode(String value) {
+        byte[] decodedBytes = Base64.getUrlDecoder().decode(value);
+        return new String(decodedBytes, StandardCharsets.UTF_8);
+    }
+
+    public String getPayload(String token) {
+        String[] parts = token.split("\\.");
+        if (parts.length != 3) {
+            return null;
+        }
+        return base64UrlDecode(parts[1]);
     }
 }
