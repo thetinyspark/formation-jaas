@@ -4,6 +4,11 @@ public class JwtClientExample {
 
     public static void main(String[] args) throws Exception {
 
+        // Petit TP 
+        // Créer une classe User  avec un champ username  et un champ role ainsi qu'un champ age 
+        // Le but du jeu est de transformer les informations de user en claims dans le payload du JWT
+        // Exemple de payload : { name: alice, role: admin, age: 30 }
+
         JwtServer server = new JwtServer();
 
         System.out.println("Client ask for jwt token...");
