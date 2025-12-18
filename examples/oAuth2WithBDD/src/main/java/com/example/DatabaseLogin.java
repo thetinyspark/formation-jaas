@@ -1,6 +1,5 @@
-package com.example.login;
+package com.example;
 import java.sql.*;
-import com.example.user.MyUser;
 
 
 // Ici nos deux applications sont deux applications qui tournent sur un même serveur. 
@@ -31,10 +30,7 @@ import com.example.user.MyUser;
 
 public class DatabaseLogin {
 
-    // private static final String JDBC_URL = "jdbc:mysql://localhost:3306/jaas_example" 
-    //     + "?useSSL=true"
-    //     + "&requireSSL=true"
-    //     + "&verifyServerCertificate=true";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/jaas_example";
 
     // Handshake 
 
@@ -54,10 +50,6 @@ public class DatabaseLogin {
     private static final String DB_PASSWORD = "root"; // Change selon ton mot de passe DB
 
     public MyUser login( String username, String password) {
-
-        // System.setProperty("javax.net.ssl.trustStore", "client-truststore.p12");
-        // System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
-
         // créer un nouvel utilisateur par défaut
         MyUser user = new MyUser("", "");
         user.setIsConnected(false);
@@ -85,23 +77,6 @@ public class DatabaseLogin {
                 }
             }
             
-
-            // String sql = "SELECT password, username FROM users WHERE username='"+username+"' AND password='"+password+"'";
-            // System.out.println(sql);
-
-            // connection.close();
-            // return user;
-
-            
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next()) {
-                    user.setName(rs.getString("username"));
-                    user.setIsConnected(true);
-                } else {
-                    System.out.println("Invalid credentials");
-                }
-            }
 
             // Récupérer les rôles de l'utilisateur
             // ce code est naturellement protégé des injections SQL grâce aux requêtes préparées.

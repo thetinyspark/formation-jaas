@@ -18,18 +18,6 @@ public class MockOAuth2Server {
     private JwtServer server = new JwtServer();
 
     public MockOAuth2Server() {
-        // client_id -> client_secret
-        validClients.put("user1", "titi");
-        validClients.put("user2", "toto");
-        validClients.put("user3", "tata");
-
-        roleClients.put("user1", "admin");
-        roleClients.put("user2", "commercial");
-        roleClients.put("user3", "peon");
-
-        // TP incorporer la connexion à la BDD pour aller chercher les utilisateurs et leur rôle
-        // se débarasser de validClients et roleClients
-        
     }
 
     /**
@@ -37,22 +25,25 @@ public class MockOAuth2Server {
      */
     public String getToken(String clientId, String clientSecret) {
         // c'est comme une connexion avec username + password
-        String expectedSecret = validClients.get(clientId);
-        if (expectedSecret != null && expectedSecret.equals(clientSecret)) {
 
-            String role = roleClients.get(clientId); 
+        DatabaseLogin db = new DatabaseLogin(); 
+        MyUser user = db.login(clientId, clientSecret);
 
-            // si les crédentials sont valides alors 
-            // Génère un token JWT et on lui fait porter 
-            // en payload le role du client
-            try{
-                return this.server.generateToken(role);
-            }
-            catch( Exception e){
-                return null;
-            }
+        if( !user.getIsConnected())
+            return null;
+        
+
+        String role = user.getRole(); 
+
+        // si les crédentials sont valides alors 
+        // Génère un token JWT et on lui fait porter 
+        // en payload le role du client
+        try{
+            return this.server.generateToken(role);
         }
-        return null; // Auth échouée
+        catch( Exception e){
+            return null;
+        }
     }
 
     /**
