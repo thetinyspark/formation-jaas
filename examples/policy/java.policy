@@ -1,0 +1,5 @@
+grant {
+// write permission granted
+    permission java.io.FilePermission "assets/sample.txt", "read, write";
+    permission java.io.FilePermission "<<ALL FILES>>", "read, write, execute";
+};
