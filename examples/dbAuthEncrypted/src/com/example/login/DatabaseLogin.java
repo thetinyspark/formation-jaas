@@ -12,6 +12,7 @@ public class DatabaseLogin {
     private static final String DB_PASSWORD = "root"; // Change selon ton mot de passe DB
 
     private static final String SALT = "_buibferiubeirubgeg1e89g1892g_";
+    private static final String NEXT_SALT = "_ergghhtrhhhdh1h189h1t8061r10j9j189j11j81tyj1_";
 
     public MyUser login(String username, String password) {
         // créer un nouvel utilisateur par défaut
@@ -26,14 +27,29 @@ public class DatabaseLogin {
             Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
 
             // Vérifier si les informations d'identification sont correctes
-            String sql = "SELECT password, username FROM users WHERE username=? AND password=?";
+            String sql = "SELECT password, username, salt_version FROM users WHERE username=? AND password=?";
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setString(1, username);
-                stmt.setString(2, hashPassword(password));
+                stmt.setString(2, hashPassword(password, SALT));
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     user.setName(rs.getString("username"));
+
+                    // hotfix dégueulasse pour MAJ un salt ( saymal ne pas mettre en prod )
+                    // int saltVersion = rs.getInt("salt_version");
+                    // if( saltVersion == 1 ){
+                    //     String newPassword = hashPassword(password, NEXT_SALT);
+                    //     String sql2 = "UPDATE users SET password=?, salt_version=2 WHERE username=?";
+                    //     try (PreparedStatement stmt2 = connection.prepareStatement(sql2)) {
+                    //         stmt2.setString(1, newPassword);
+                    //         stmt2.setString(2, username);
+                    //         stmt2.executeQuery();
+                    //     }catch( Exception e){}
+                    // }
+
                     user.setIsConnected(true);
+
+                    // MAJ with new salt 
                 } else {
                     System.out.println("Invalid credentials");
                 }
@@ -69,7 +85,7 @@ public class DatabaseLogin {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
 
-            String hashedPassword = hashPassword(password);
+            String hashedPassword = hashPassword(password, SALT);
 
             // Ajouter dans la table users
             String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
@@ -103,9 +119,9 @@ public class DatabaseLogin {
     // -----------------------------
     // Méthode de hash SHA-256
     // -----------------------------
-    private String hashPassword(String password) {
+    private String hashPassword(String password, String salt) {
         try {
-            password = SALT + password;
+            password = salt + password;
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashedBytes = digest.digest(password.getBytes("UTF-8"));
             // conversion bytes -> hex
