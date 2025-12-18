@@ -9,6 +9,12 @@ import java.util.Map;
  */
 public class MfaServer {
 
+    // TP aller chercher les utilisateurs dans la base de données en reprenant 
+    // notre exemple précédent. 
+
+
+    // TP BONUS mettre une limite de temps de une minute à votre OTP
+    
     private static final SecureRandom random = new SecureRandom();
 
     // utilisateurs "en base"
@@ -52,7 +58,7 @@ public class MfaServer {
 
         if( valid )
             otpStore.remove(username);
-        
+
         return valid;
     }
 }
