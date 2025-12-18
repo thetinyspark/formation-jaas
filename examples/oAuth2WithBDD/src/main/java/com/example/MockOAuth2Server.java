@@ -26,6 +26,9 @@ public class MockOAuth2Server {
         roleClients.put("user1", "admin");
         roleClients.put("user2", "commercial");
         roleClients.put("user3", "peon");
+
+        // TP incorporer la connexion à la BDD pour aller chercher les utilisateurs et leur rôle
+        // se débarasser de validClients et roleClients
         
     }
 
