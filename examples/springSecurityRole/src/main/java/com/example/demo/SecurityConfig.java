@@ -15,6 +15,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // TP ajouter un utilisateur : 
+    
+    // Un utilisateur avec le role COMMERCIAL qui peut consulter les pages tout public
+    // les pages d'un utilisateur qui a le rôle USER et les pages d'un utilisateur qui a le role COMMERCIAL
+    // Ajouter un endpoint (donc une URI prise en charge) qui affiche à l'utilisateur des données dédiées aux commerciaux
+
+    // Ajouter le role COMMERCIAL à l'utilisateur ADMIN
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
