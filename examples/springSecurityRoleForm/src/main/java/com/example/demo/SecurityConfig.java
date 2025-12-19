@@ -40,6 +40,12 @@ public class SecurityConfig {
     @Bean
     UserDetailsService users() {
 
+        // Recréer un utilisateur commercial avec le role USER 
+        // puis ajouter le role commercial à Admin
+
+        // Tester ce que donne le projet quand on ACTIVE la protection csrf
+        // Tester ce que donne le projet quand on DESACTIVE la protection csrf
+
         UserDetails user = User.withUsername("user")
                 .password("{noop}password")
                 .roles("USER")
