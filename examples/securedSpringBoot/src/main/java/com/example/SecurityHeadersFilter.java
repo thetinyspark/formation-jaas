@@ -13,10 +13,11 @@ import java.io.IOException;
 public class SecurityHeadersFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        FilterChain filterChain
+    )throws ServletException, IOException {
 
         // Header pour protection XSS
         // demande au navigateur de bloquer les pages détectées comme contenant du XSS.
@@ -33,14 +34,14 @@ public class SecurityHeadersFilter extends OncePerRequestFilter {
         response.setHeader("Content-Security-Policy", "default-src 'self'");
 
         // Vérification simple du header Authorization pour toutes les requêtes /api/secured
-        // String path = request.getRequestURI();
-        // if (path.startsWith("/api/secured")) {
-        //     String authHeader = request.getHeader("Authorization");
-        //     if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        //         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid Authorization header");
-        //         return;
-        //     }
-        // }
+        String path = request.getRequestURI();
+        if (path.startsWith("/api/secured")) {
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid Authorization header");
+                return;
+            }
+        }
 
         filterChain.doFilter(request, response);
     }

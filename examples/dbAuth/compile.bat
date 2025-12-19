@@ -5,5 +5,6 @@
 
 
 : run
-java -cp ".;lib/mysql-connector.jar;bin" com.example.Main
+@REM java -cp ".;lib/mysql-connector.jar;bin" com.example.Main
+java -cp ".;lib/mysql-connector-java-5.1.49.jar;bin" com.example.Main
 

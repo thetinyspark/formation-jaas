@@ -30,10 +30,13 @@ public class HomeController {
         String sanitizedData = Encode.forHtml(data);
 
         // Logging SIEM-ready
-        String ip = request.getRemoteAddr();
-        SECURITY_LOG.info("event=ACCESS data={} ip={} endpoint=/secured", data, ip);
+        if( !sanitizedData.equals(data)){
+            String ip = request.getRemoteAddr();
+            SECURITY_LOG.info("event=ACCESS data={} ip={} endpoint=/secured XSS blocked", data, ip);
+        }
 
-        String response = String.format("{\"message\":\"%s\"}", sanitizedData);
+        // String response = String.format("{\"message\":\"%s\"}", sanitizedData);
+        String response = sanitizedData;
         return ResponseEntity.ok(response);
     }
 

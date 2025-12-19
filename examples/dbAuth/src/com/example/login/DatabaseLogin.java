@@ -34,9 +34,7 @@ public class DatabaseLogin {
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/jaas_example" 
         + "?useSSL=true"
         + "&requireSSL=true"
-        + "&verifyServerCertificate=true"
-        + "&trustCertificateKeyStoreUrl=file:C:/mysql/certs/client-truststore.p12"
-        + "&trustCertificateKeyStorePassword=changeit";
+        + "&verifyServerCertificate=false";
 
     // Handshake 
 
@@ -57,7 +55,9 @@ public class DatabaseLogin {
 
     public MyUser login( String username, String password) {
 
-        // System.setProperty("javax.net.ssl.trustStore", "client-truststore.p12");
+        
+
+        // System.setProperty("javax.net.ssl.trustStore", "C:/mysql/certs/client-truststore.p12");
         // System.setProperty("javax.net.ssl.trustStorePassword", "changeit");
 
         // créer un nouvel utilisateur par défaut
@@ -66,7 +66,8 @@ public class DatabaseLogin {
 
         try {
             // Enregistrer le driver JDBC pour MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
 
             // Connexion à la base de données MySQL
             Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASSWORD);
