@@ -16,6 +16,11 @@ public class DemoController {
         return "User access";
     }
 
+    @GetMapping("/commercial")
+    public String commercialEndpoint() {
+        return "Commercial access";
+    }
+
     @GetMapping("/admin")
     public String adminEndpoint() {
         return "Admin access";

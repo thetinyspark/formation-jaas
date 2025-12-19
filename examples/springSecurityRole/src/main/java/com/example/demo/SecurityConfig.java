@@ -29,6 +29,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/public").permitAll()
                 .requestMatchers("/user").hasRole("USER")
+                .requestMatchers("/commercial").hasRole("COMMERCIAL")
                 .requestMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().denyAll()
             )
@@ -44,11 +45,16 @@ public class SecurityConfig {
                 .roles("USER")
                 .build();
 
-        UserDetails admin = User.withUsername("admin")
-                .password("{noop}admin")
-                .roles("ADMIN", "USER")
+        UserDetails com = User.withUsername("commercial")
+                .password("{noop}passcom")
+                .roles("USER", "COMMERCIAL")
                 .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        UserDetails admin = User.withUsername("admin")
+                .password("{noop}admin")
+                .roles("ADMIN", "USER", "COMMERCIAL")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin, com);
     }
 }
