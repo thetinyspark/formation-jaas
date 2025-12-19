@@ -31,10 +31,12 @@ import com.example.user.MyUser;
 
 public class DatabaseLogin {
 
-    // private static final String JDBC_URL = "jdbc:mysql://localhost:3306/jaas_example" 
-    //     + "?useSSL=true"
-    //     + "&requireSSL=true"
-    //     + "&verifyServerCertificate=true";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/jaas_example" 
+        + "?useSSL=true"
+        + "&requireSSL=true"
+        + "&verifyServerCertificate=true"
+        + "&trustCertificateKeyStoreUrl=file:C:/mysql/certs/client-truststore.p12"
+        + "&trustCertificateKeyStorePassword=changeit";
 
     // Handshake 
 

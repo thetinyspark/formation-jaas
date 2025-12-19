@@ -13,5 +13,7 @@ public class SecureLoggingExample {
         String action = "myAction";
         String pwd = "secret123";
         logger.info("Login user={} action={} password={}", username, action, pwd);
+        logger.info("OUAHOU mon mot de passe est le suivant password={}", pwd);
+        logger.info("Je m'appelle user={}", username);
     }
 }

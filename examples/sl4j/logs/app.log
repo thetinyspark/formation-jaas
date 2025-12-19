@@ -1,1 +1,4 @@
-21:59:13 INFO  com.example.SecureLoggingExample - Login user=myUserName action=myAction password=****
+17:04:56 INFO  com.example.SecureLoggingExample - Login user=myUserName action=myAction password=****
+17:06:15 INFO  com.example.SecureLoggingExample - Login user=myUserName action=myAction password=****
+17:06:15 INFO  com.example.SecureLoggingExample - OUAHOU mon mot de passe est le suivant password=****
+17:06:15 INFO  com.example.SecureLoggingExample - Je m'appelle user=myUserName
